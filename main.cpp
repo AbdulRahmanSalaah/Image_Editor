@@ -155,68 +155,64 @@ void Apply_Edge_Detection(unsigned char inputImage[][SIZE], unsigned char output
 }
 void enlarge_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int quarter)
 {
-    int newSize = SIZE * 2; // New size will be twice the original size
-    int halfSize = SIZE / 2;
+    int newHeight = SIZE * quarter;
+    int newWidth = SIZE * quarter;
 
-    // Check if the input quarter is valid
-    if (quarter < 1 || quarter > 4)
+    for (int i = 0; i < newHeight; i++)
     {
-        cout << "Invalid quarter. Please choose a quarter between 1 and 4." << endl;
-        return;
-    }
-
-    // Initialize variables for indexing the input and output images
-    int inputRowStart, inputRowEnd, inputColStart, inputColEnd;
-    int outputRowStart, outputColStart;
-
-    // Define the regions of the input and output images based on the selected quarter
-    if (quarter == 1)
-    {
-        inputRowStart = 0;
-        inputRowEnd = halfSize;
-        inputColStart = 0;
-        inputColEnd = halfSize;
-        outputRowStart = 0;
-        outputColStart = 0;
-    }
-    else if (quarter == 2)
-    {
-        inputRowStart = 0;
-        inputRowEnd = halfSize;
-        inputColStart = halfSize;
-        inputColEnd = SIZE;
-        outputRowStart = 0;
-        outputColStart = halfSize;
-    }
-    else if (quarter == 3)
-    {
-        inputRowStart = halfSize;
-        inputRowEnd = SIZE;
-        inputColStart = 0;
-        inputColEnd = halfSize;
-        outputRowStart = halfSize;
-        outputColStart = 0;
-    }
-    else if (quarter == 4)
-    {
-        inputRowStart = halfSize;
-        inputRowEnd = SIZE;
-        inputColStart = halfSize;
-        inputColEnd = SIZE;
-        outputRowStart = halfSize;
-        outputColStart = halfSize;
-    }
-
-    // Enlarge the image by copying pixels from the specified quarter
-    for (int i = inputRowStart, oi = outputRowStart; i < inputRowEnd; i++, oi += 2)
-    {
-        for (int j = inputColStart, oj = outputColStart; j < inputColEnd; j++, oj += 2)
+        for (int j = 0; j < newWidth; j++)
         {
-            unsigned char pixelValue = inputImage[i][j];
-            outputImage[oi][oj] = pixelValue;
-            outputImage[oi][oj + 1] = pixelValue;
-            outputImage[oi + 1][oj] = pixelValue;
-            outputImage[oi + 1][oj + 1] = pixelValue;
+            int originalRow = i / quarter;
+            int originalCol = j / quarter;
+
+            outputImage[i][j] = inputImage[originalRow][originalCol];
+        }
+    }
+}
+
+void shrinkImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], float size)
+{
+    if (size == 0.5)
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+
+                if (i * 2 <= 255 && j * 2 <= 255)
+                {
+                    outputImage[i][j] = inputImage[i * 2][j * 2];
+                }
+            }
+        }
+    }
+    else if (size == 0.25)
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+                int x = i * 4, s = j * 4;
+                if (x <= 255 && j * 4 <= 255)
+                {
+                    outputImage[i][j] = inputImage[x][s];
+                }
+            }
+        }
+    }
+    else if (size == 0.3 || size == 0.33)
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+                int s = i * 3;
+                int x = j * 3;
+                if (s <= 255 && x <= 255)
+                {
+                    outputImage[i][j] = inputImage[s][x];
+                }
+            }
         }
     }
 }
@@ -389,6 +385,12 @@ void menu()
             {
                 // Apply the shrink filter (similar to your previous code)
                 // ...
+
+                float size;
+                cout << "please enter the size (0.5 , 0.25 , 0.3) to shrink : ";
+                cin >> size;
+                shrinkImage(inputImage, outputImage, size);
+
                 cout << "Shrink filter applied." << endl;
                 break;
             }
