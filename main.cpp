@@ -169,7 +169,6 @@ void enlarge_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[]
         }
     }
 }
-
 void shrinkImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], float size)
 {
     if (size == 0.5)
@@ -216,6 +215,69 @@ void shrinkImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][S
         }
     }
 }
+void mirrorImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char x)
+{
+
+    if (x == 'l' || x == 'L')
+    {
+        int width = SIZE;
+        int height = SIZE;
+
+        for (int y = 0; y < height / 2; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                outputImage[x][y] = inputImage[x][y];
+                outputImage[x][height - 1 - y] = inputImage[x][y];
+            }
+        }
+    }
+    else if (x == 'r' || x == 'R')
+    {
+        int width = SIZE;
+        int height = SIZE;
+
+        for (int y = 0; y < height / 2; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                outputImage[x][y] = inputImage[x][height - 1 - y];
+                outputImage[x][height - 1 - y] = inputImage[x][height - 1 - y];
+            }
+        }
+    }
+    else if (x == 'u' || x == 'U')
+    {
+
+        int width = SIZE;
+        int height = SIZE;
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width / 2; x++)
+            {
+                outputImage[x][y] = inputImage[x][y];
+                outputImage[width - 1 - x][y] = inputImage[x][y];
+            }
+        }
+    }
+    else if (x == 'd' || x == 'D')
+    {
+
+        int width = SIZE;
+        int height = SIZE;
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width / 2; x++)
+            {
+                outputImage[x][y] = inputImage[width - 1 - x][y];
+                outputImage[width - 1 - x][y] = inputImage[width - 1 - x][y];
+            }
+        }
+    }
+}
+
 // Add more filter function definitions here...
 void menu()
 {
@@ -398,6 +460,11 @@ void menu()
             {
                 // Apply the mirror 1/2 filter (similar to your previous code)
                 // ...
+
+                cout << "Please enter l for left or r for right or u for up or d for down: ";
+                char x;
+                cin >> x;
+                mirrorImage(inputImage, outputImage, x);
                 cout << "Mirror 1/2 filter applied." << endl;
                 break;
             }
