@@ -1,4 +1,7 @@
 # Ass1_CS
+
+This is a CPP project that processes 256x256 bitmap images  
+
 Names:
 
 1-AbdulrahmanSalah            ID:20220176
