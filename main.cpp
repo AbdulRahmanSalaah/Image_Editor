@@ -1,286 +1,53 @@
+/*
+Course:  CS213
+
+Project: Image Editor with C++
+
+Description: This program is an image editor that can apply different filters to images.
+
+made by:
+
+1-Abdulrahman Salah  ID:20220176
+
+2-OmarSaeed  ID:20220225
+
+3:SohaylaMohamed  ID:20220159
+
+
+
+*/
+
 #include <iostream>
 #include <fstream>
 #include <cstring>
 #include <cmath>
 #include "bmplib.cpp"
 
-void applyBlackAndWhiteFilter(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
-{
-    int sum = 0;
-    int pixelCount = SIZE * SIZE;
+//______________________________________
+void applyBlackAndWhiteFilter(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE]);
+//______________________________________
+void Apply_Invert_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE]);
+//______________________________________
+void merge(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], unsigned char inputImag2[][SIZE]);
+//______________________________________
+void flipImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char x);
+//______________________________________
+void darkenandlightenimage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char c);
+//______________________________________
+void Apply_Rotate_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int Angle);
+//______________________________________
+void Apply_Edge_Detection(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE]);
+//______________________________________
+void enlarge_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int quarter);
+//______________________________________
+void shrinkImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], float size);
+//______________________________________
+void mirrorImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char x);
+//______________________________________
 
-    // Calculate the average gray level
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
-        {
-            sum += inputImage[i][j]; // Using the pixel value for grayscale
-
-            // Convert the pixel to white (255) or black (0) based on average gray level
-            int average = sum / pixelCount;
-            if (inputImage[i][j] > average)
-            {
-                outputImage[i][j] = 255;
-            }
-            else
-            {
-                outputImage[i][j] = 0;
-            }
-        }
-    }
-}
-void flipImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char x)
-{
-    if (x == 'h' || x == 'H')
-    {
-        for (int i = 0; i < SIZE; i++)
-        {
-            for (int j = 0; j < SIZE; j++)
-            {
-                outputImage[i][j] = inputImage[i][SIZE - 1 - j];
-            }
-        }
-    }
-    else if (x == 'v' || x == 'V')
-    {
-        for (int i = 0; i < SIZE; i++)
-        {
-            for (int j = 0; j < SIZE; j++)
-            {
-                outputImage[i][j] = inputImage[SIZE - 1 - i][j];
-            }
-        }
-    }
-    else
-    {
-        cout << "invalid input" << endl;
-    }
-}
-void merge(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], unsigned char inputImag2[][SIZE])
-{
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
-        {
-            outputImage[i][j] = (inputImage[i][j] + inputImag2[i][j]) / 2; // average of the two images
-        }
-    }
-}
-void Apply_Invert_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
-{
-    for (int i = 0; i < SIZE; ++i)
-    {
-        for (int j = 0; j < SIZE; ++j)
-        {
-            outputImage[i][j] = 255 - inputImage[i][j]; // Convert every black pixel(0) to white pixel(255)
-            //  Convert every white pixel(255) to black pixel(0)
-            //  and every gray pixel is turned to opposite level
-        }
-    }
-}
-void Apply_Rotate_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int Angle)
-{
-
-    if (Angle == 90)
-    {
-        for (int i = 0; i < SIZE; ++i)
-        {
-            for (int j = 0; j < SIZE; ++j)
-            {
-                outputImage[i][j] = inputImage[j][SIZE - i - 1]; // to rotate the image clockwise by 90º;
-            }
-        }
-    }
-    else if (Angle == 180)
-    {
-        for (int i = 0; i < SIZE; ++i)
-        {
-            for (int j = 0; j < SIZE; ++j)
-            {
-                outputImage[i][j] = inputImage[SIZE - i - 1][SIZE - j - 1]; // to rotate the image clockwise by 180º;
-            }
-        }
-    }
-    else if (Angle == 270)
-    {
-        for (int i = 0; i < SIZE; ++i)
-        {
-            for (int j = 0; j < SIZE; ++j)
-            {
-                outputImage[i][j] = inputImage[SIZE - j - 1][i]; // to rotate the image clockwise by 270º;
-            }
-        }
-    }
-}
-void darkenandlightenimage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char c)
-{
-
-    if (c == 'd')
-    {
-        for (int i = 0; i < SIZE; i++)
-        {
-            for (int j = 0; j < SIZE; j++)
-            {
-                outputImage[i][j] = inputImage[i][j] / 2;
-            }
-        }
-    }
-    else
-    {
-        for (int i = 0; i < SIZE; i++)
-        {
-            for (int j = 0; j < SIZE; j++)
-            {
-                outputImage[i][j] = inputImage[i][j] + ((255 - inputImage[i][j]) / 2);
-            }
-        }
-    }
-}
-void Apply_Edge_Detection(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
-{
-    for (int i = 1; i < SIZE - 1; ++i)
-    {
-        for (int j = 1; j < SIZE - 1; ++j)
-        {
-
-            // apply sobel opearator to calculate the gradient toward x-axis
-            int gx = inputImage[i + 1][j - 1] + 2 * inputImage[i + 1][j] + inputImage[i + 1][j + 1] - inputImage[i - 1][j - 1] - 2 * inputImage[i - 1][j] - inputImage[i - 1][j + 1];
-            // apply sobel opearator to calculate the gradient toward y-axis
-            int gy = inputImage[i - 1][j + 1] + 2 * inputImage[i][j + 1] + inputImage[i + 1][j + 1] - inputImage[i - 1][j - 1] - 2 * inputImage[i][j - 1] - inputImage[i + 1][j - 1];
-
-            int gradient = abs(gx) + abs(gy);
-            outputImage[i][j] = (gradient > 128) ? 0 : 255;
-        }
-    }
-}
-void enlarge_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int quarter)
-{
-    int newHeight = SIZE * quarter;
-    int newWidth = SIZE * quarter;
-
-    for (int i = 0; i < newHeight; i++)
-    {
-        for (int j = 0; j < newWidth; j++)
-        {
-            int originalRow = i / quarter;
-            int originalCol = j / quarter;
-
-            outputImage[i][j] = inputImage[originalRow][originalCol];
-        }
-    }
-}
-void shrinkImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], float size)
-{
-    if (size == 0.5)
-    {
-        for (int i = 0; i < SIZE; i++)
-        {
-            for (int j = 0; j < SIZE; j++)
-            {
-
-                if (i * 2 <= 255 && j * 2 <= 255)
-                {
-                    outputImage[i][j] = inputImage[i * 2][j * 2];
-                }
-            }
-        }
-    }
-    else if (size == 0.25)
-    {
-        for (int i = 0; i < SIZE; i++)
-        {
-            for (int j = 0; j < SIZE; j++)
-            {
-                int x = i * 4, s = j * 4;
-                if (x <= 255 && j * 4 <= 255)
-                {
-                    outputImage[i][j] = inputImage[x][s];
-                }
-            }
-        }
-    }
-    else if (size == 0.3 || size == 0.33)
-    {
-        for (int i = 0; i < SIZE; i++)
-        {
-            for (int j = 0; j < SIZE; j++)
-            {
-                int s = i * 3;
-                int x = j * 3;
-                if (s <= 255 && x <= 255)
-                {
-                    outputImage[i][j] = inputImage[s][x];
-                }
-            }
-        }
-    }
-}
-void mirrorImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char x)
-{
-
-    if (x == 'l' || x == 'L')
-    {
-        int width = SIZE;
-        int height = SIZE;
-
-        for (int y = 0; y < height / 2; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                outputImage[x][y] = inputImage[x][y];
-                outputImage[x][height - 1 - y] = inputImage[x][y];
-            }
-        }
-    }
-    else if (x == 'r' || x == 'R')
-    {
-        int width = SIZE;
-        int height = SIZE;
-
-        for (int y = 0; y < height / 2; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                outputImage[x][y] = inputImage[x][height - 1 - y];
-                outputImage[x][height - 1 - y] = inputImage[x][height - 1 - y];
-            }
-        }
-    }
-    else if (x == 'u' || x == 'U')
-    {
-
-        int width = SIZE;
-        int height = SIZE;
-
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width / 2; x++)
-            {
-                outputImage[x][y] = inputImage[x][y];
-                outputImage[width - 1 - x][y] = inputImage[x][y];
-            }
-        }
-    }
-    else if (x == 'd' || x == 'D')
-    {
-
-        int width = SIZE;
-        int height = SIZE;
-
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width / 2; x++)
-            {
-                outputImage[x][y] = inputImage[width - 1 - x][y];
-                outputImage[width - 1 - x][y] = inputImage[width - 1 - x][y];
-            }
-        }
-    }
-}
-
-// Add more filter function definitions here...
 void menu()
 {
+    // Declare the variables here.
     unsigned char inputImage[SIZE][SIZE];
     unsigned char outputImage[SIZE][SIZE];
     char inputFileName[100];
@@ -289,6 +56,7 @@ void menu()
 
     while (true)
     {
+        // Display the menu.
 
         cout << "Menu:" << endl;
         cout << "1. Load an image" << endl;
@@ -300,6 +68,7 @@ void menu()
 
         switch (choice)
         {
+            // Load an image
         case '1':
         {
             cout << "Please enter the file name of the image to load: ";
@@ -325,7 +94,7 @@ void menu()
         {
             // filter menu here
 
-            if (inputFileName[0] == '\0')
+            if (inputFileName[0] == '\0') // if the user didn't load an image
             {
                 cout << "Please load an image first." << endl;
                 break;
@@ -541,11 +310,293 @@ void menu()
     }
 }
 
+
 int main()
 {
     cout << "Welcome to the Image Editor!" << endl;
-    menu();
+    menu(); // Display menu that has all the operations
     cout << "Thank you for using the Image Editor!" << endl;
 
     return 0;
 }
+
+
+// function definitions
+
+void applyBlackAndWhiteFilter(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
+{
+    int sum = 0;
+    int pixelCount = SIZE * SIZE;
+
+    // Calculate the average gray level
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            sum += inputImage[i][j]; // Using the pixel value for grayscale
+
+            // Convert the pixel to white (255) or black (0) based on average gray level
+            int average = sum / pixelCount;
+            if (inputImage[i][j] > average)
+            {
+                outputImage[i][j] = 255;
+            }
+            else
+            {
+                outputImage[i][j] = 0;
+            }
+        }
+    }
+}
+
+void Apply_Invert_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
+{
+    for (int i = 0; i < SIZE; ++i)
+    {
+        for (int j = 0; j < SIZE; ++j)
+        {
+            outputImage[i][j] = 255 - inputImage[i][j]; // Convert every black pixel(0) to white pixel(255)
+            //  Convert every white pixel(255) to black pixel(0)
+            //  and every gray pixel is turned to opposite level
+        }
+    }
+}
+void merge(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], unsigned char inputImag2[][SIZE])
+{
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            outputImage[i][j] = (inputImage[i][j] + inputImag2[i][j]) / 2; // average of the two images
+        }
+    }
+}
+void flipImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char x)
+{
+    if (x == 'h' || x == 'H')
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+                outputImage[i][j] = inputImage[i][SIZE - 1 - j];
+            }
+        }
+    }
+    else if (x == 'v' || x == 'V')
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+                outputImage[i][j] = inputImage[SIZE - 1 - i][j];
+            }
+        }
+    }
+    else
+    {
+        cout << "invalid input" << endl;
+    }
+}
+void darkenandlightenimage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char c)
+{
+
+    if (c == 'd')
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+                outputImage[i][j] = inputImage[i][j] / 2;
+            }
+        }
+    }
+    else
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+                outputImage[i][j] = inputImage[i][j] + ((255 - inputImage[i][j]) / 2);
+            }
+        }
+    }
+}
+void Apply_Rotate_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int Angle)
+{
+
+    if (Angle == 90)
+    {
+        for (int i = 0; i < SIZE; ++i)
+        {
+            for (int j = 0; j < SIZE; ++j)
+            {
+                outputImage[i][j] = inputImage[j][SIZE - i - 1]; // to rotate the image clockwise by 90º;
+            }
+        }
+    }
+    else if (Angle == 180)
+    {
+        for (int i = 0; i < SIZE; ++i)
+        {
+            for (int j = 0; j < SIZE; ++j)
+            {
+                outputImage[i][j] = inputImage[SIZE - i - 1][SIZE - j - 1]; // to rotate the image clockwise by 180º;
+            }
+        }
+    }
+    else if (Angle == 270)
+    {
+        for (int i = 0; i < SIZE; ++i)
+        {
+            for (int j = 0; j < SIZE; ++j)
+            {
+                outputImage[i][j] = inputImage[SIZE - j - 1][i]; // to rotate the image clockwise by 270º;
+            }
+        }
+    }
+}
+
+void Apply_Edge_Detection(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
+{
+    for (int i = 1; i < SIZE - 1; ++i)
+    {
+        for (int j = 1; j < SIZE - 1; ++j)
+        {
+
+            // apply sobel opearator to calculate the gradient toward x-axis
+            int gx = inputImage[i + 1][j - 1] + 2 * inputImage[i + 1][j] + inputImage[i + 1][j + 1] - inputImage[i - 1][j - 1] - 2 * inputImage[i - 1][j] - inputImage[i - 1][j + 1];
+            // apply sobel opearator to calculate the gradient toward y-axis
+            int gy = inputImage[i - 1][j + 1] + 2 * inputImage[i][j + 1] + inputImage[i + 1][j + 1] - inputImage[i - 1][j - 1] - 2 * inputImage[i][j - 1] - inputImage[i + 1][j - 1];
+
+            int gradient = abs(gx) + abs(gy);
+            outputImage[i][j] = (gradient > 128) ? 0 : 255;
+        }
+    }
+}
+void enlarge_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int quarter)
+{
+    int newHeight = SIZE * quarter;
+    int newWidth = SIZE * quarter;
+
+    for (int i = 0; i < newHeight; i++)
+    {
+        for (int j = 0; j < newWidth; j++)
+        {
+            int originalRow = i / quarter;
+            int originalCol = j / quarter;
+
+            outputImage[i][j] = inputImage[originalRow][originalCol];
+        }
+    }
+}
+void shrinkImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], float size)
+{
+    if (size == 0.5)
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+
+                if (i * 2 <= 255 && j * 2 <= 255)
+                {
+                    outputImage[i][j] = inputImage[i * 2][j * 2];
+                }
+            }
+        }
+    }
+    else if (size == 0.25)
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+                int x = i * 4, s = j * 4;
+                if (x <= 255 && j * 4 <= 255)
+                {
+                    outputImage[i][j] = inputImage[x][s];
+                }
+            }
+        }
+    }
+    else if (size == 0.3 || size == 0.33)
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+                int s = i * 3;
+                int x = j * 3;
+                if (s <= 255 && x <= 255)
+                {
+                    outputImage[i][j] = inputImage[s][x];
+                }
+            }
+        }
+    }
+}
+void mirrorImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char x)
+{
+
+    if (x == 'l' || x == 'L')
+    {
+        int width = SIZE;
+        int height = SIZE;
+
+        for (int y = 0; y < height / 2; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                outputImage[x][y] = inputImage[x][y];
+                outputImage[x][height - 1 - y] = inputImage[x][y];
+            }
+        }
+    }
+    else if (x == 'r' || x == 'R')
+    {
+        int width = SIZE;
+        int height = SIZE;
+
+        for (int y = 0; y < height / 2; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                outputImage[x][y] = inputImage[x][height - 1 - y];
+                outputImage[x][height - 1 - y] = inputImage[x][height - 1 - y];
+            }
+        }
+    }
+    else if (x == 'u' || x == 'U')
+    {
+
+        int width = SIZE;
+        int height = SIZE;
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width / 2; x++)
+            {
+                outputImage[x][y] = inputImage[x][y];
+                outputImage[width - 1 - x][y] = inputImage[x][y];
+            }
+        }
+    }
+    else if (x == 'd' || x == 'D')
+    {
+
+        int width = SIZE;
+        int height = SIZE;
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width / 2; x++)
+            {
+                outputImage[x][y] = inputImage[width - 1 - x][y];
+                outputImage[width - 1 - x][y] = inputImage[width - 1 - x][y];
+            }
+        }
+    }
+}
+
+// Add more filter function definitions here...
