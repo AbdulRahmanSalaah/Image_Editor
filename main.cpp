@@ -2,9 +2,9 @@
                         "بسم الله"
 
     اللهمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ عَدَدَ كَمَالِ اللهِ وَكَمَا يَلِيقُ بِكَمَالِهِ
-    
-------------------------------------------------------------------------------------------  
-FCAI – OOP Programming – 2023 - Assignment 1 
+
+------------------------------------------------------------------------------------------
+FCAI – OOP Programming – 2023 - Assignment 1
 
 Course:  CS213
 
@@ -14,13 +14,13 @@ Description: This program is an image editor that can apply different filters to
 
 made by:
 
-1-Abdulrahman Salah  ID:20220176
+1-Abdulrahman Salah    ID:20220176              email: sa8640205@gmail.com
+ 
+2-OmarSaeed            ID:20220225              email:  os9073020@gmail.com
 
-2-OmarSaeed  ID:20220225
+3:SohaylaMohamed       ID:20220159              email:  anmo9232@gmail.com
 
-3:SohaylaMohamed  ID:20220159
-
-------------------------------------------------------------------------------------------   
+------------------------------------------------------------------------------------------
 
 */
 
@@ -168,7 +168,7 @@ void menu()
             {
                 // Apply the flip filter
 
-                cout << "chose h for horizontal flip or v for vertical flip: ";
+                cout << "choose h for horizontal flip or v for vertical flip: ";
                 char flipChoice;
                 cin >> flipChoice;
                 flipImage(inputImage, outputImage, flipChoice);
@@ -221,8 +221,7 @@ void menu()
             }
             case '9':
             {
-                // Apply the shrink filter 
-                
+                // Apply the shrink filter
 
                 float size;
                 cout << "please enter the size (0.5 , 0.25 , 0.3) to shrink : ";
@@ -234,8 +233,7 @@ void menu()
             }
             case 'a':
             {
-                // Apply the mirror 1/2 filter 
-                
+                // Apply the mirror 1/2 filter
 
                 cout << "Please enter l for left or r for right or u for up or d for down: ";
                 char x;
@@ -322,7 +320,7 @@ int main()
     cout << "Welcome to the Image Editor!" << endl;
 
     menu(); // Display menu that has all the operations
-    
+
     cout << "Thank you for using the Image Editor!" << endl;
 
     return 0;
