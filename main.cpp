@@ -1,4 +1,11 @@
 /*
+                        "بسم الله"
+
+    اللهمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ عَدَدَ كَمَالِ اللهِ وَكَمَا يَلِيقُ بِكَمَالِهِ
+    
+------------------------------------------------------------------------------------------  
+FCAI – OOP Programming – 2023 - Assignment 1 
+
 Course:  CS213
 
 Project: Image Editor with C++
@@ -13,7 +20,7 @@ made by:
 
 3:SohaylaMohamed  ID:20220159
 
-
+------------------------------------------------------------------------------------------   
 
 */
 
@@ -26,7 +33,7 @@ made by:
 //______________________________________
 void applyBlackAndWhiteFilter(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE]);
 //______________________________________
-void Apply_Invert_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE]);
+void applyInvertfilter(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE]);
 //______________________________________
 void merge(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], unsigned char inputImag2[][SIZE]);
 //______________________________________
@@ -34,9 +41,9 @@ void flipImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZ
 //______________________________________
 void darkenandlightenimage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char c);
 //______________________________________
-void Apply_Rotate_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int Angle);
+void applyRotateImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int Angle);
 //______________________________________
-void Apply_Edge_Detection(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE]);
+void applyEdgeDetection(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE]);
 //______________________________________
 void enlarge_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int quarter);
 //______________________________________
@@ -137,7 +144,7 @@ void menu()
             {
                 // Apply the Invert filter
 
-                Apply_Invert_Image(inputImage, outputImage);
+                applyInvertfilter(inputImage, outputImage);
                 cout << "Invert filter applied." << endl;
                 break;
             }
@@ -187,7 +194,7 @@ void menu()
                 cout << "Please enter the angle to rotate the image (90, 180, 270): ";
                 int angle;
                 cin >> angle;
-                Apply_Rotate_Image(inputImage, outputImage, angle);
+                applyRotateImage(inputImage, outputImage, angle);
 
                 cout << "Rotate filter applied." << endl;
                 break;
@@ -196,7 +203,7 @@ void menu()
             {
                 // Apply the edge detection filter
 
-                Apply_Edge_Detection(inputImage, outputImage);
+                applyEdgeDetection(inputImage, outputImage);
 
                 cout << "Edge detection filter applied." << endl;
                 break;
@@ -214,8 +221,8 @@ void menu()
             }
             case '9':
             {
-                // Apply the shrink filter (similar to your previous code)
-                // ...
+                // Apply the shrink filter 
+                
 
                 float size;
                 cout << "please enter the size (0.5 , 0.25 , 0.3) to shrink : ";
@@ -227,8 +234,8 @@ void menu()
             }
             case 'a':
             {
-                // Apply the mirror 1/2 filter (similar to your previous code)
-                // ...
+                // Apply the mirror 1/2 filter 
+                
 
                 cout << "Please enter l for left or r for right or u for up or d for down: ";
                 char x;
@@ -310,16 +317,16 @@ void menu()
     }
 }
 
-
 int main()
 {
     cout << "Welcome to the Image Editor!" << endl;
+
     menu(); // Display menu that has all the operations
+    
     cout << "Thank you for using the Image Editor!" << endl;
 
     return 0;
 }
-
 
 // function definitions
 
@@ -349,7 +356,7 @@ void applyBlackAndWhiteFilter(unsigned char inputImage[][SIZE], unsigned char ou
     }
 }
 
-void Apply_Invert_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
+void applyInvertfilter(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
 {
     for (int i = 0; i < SIZE; ++i)
     {
@@ -422,7 +429,7 @@ void darkenandlightenimage(unsigned char inputImage[][SIZE], unsigned char outpu
         }
     }
 }
-void Apply_Rotate_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int Angle)
+void applyRotateImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int Angle)
 {
 
     if (Angle == 90)
@@ -457,7 +464,7 @@ void Apply_Rotate_Image(unsigned char inputImage[][SIZE], unsigned char outputIm
     }
 }
 
-void Apply_Edge_Detection(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
+void applyEdgeDetection(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
 {
     for (int i = 1; i < SIZE - 1; ++i)
     {
