@@ -18,7 +18,7 @@ made by:
  
 2-OmarSaeed            ID:20220225              email:  os9073020@gmail.com
 
-3:SohaylaMohammed      ID:20220159              email:  anmo9232@gmail.com
+3:SohaylaMohamed       ID:20220159              email:  anmo9232@gmail.com
 
 ------------------------------------------------------------------------------------------
 
@@ -338,11 +338,8 @@ void applyBlackAndWhiteFilter(unsigned char inputImage[][SIZE], unsigned char ou
     {
         for (int j = 0; j < SIZE; j++)
         {
-            sum += inputImage[i][j]; // Using the pixel value for grayscale
 
-            // Convert the pixel to white (255) or black (0) based on average gray level
-            int average = sum / pixelCount;
-            if (inputImage[i][j] > average)
+            if (inputImage[i][j] > 127)
             {
                 outputImage[i][j] = 255;
             }
