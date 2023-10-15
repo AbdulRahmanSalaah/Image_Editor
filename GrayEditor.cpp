@@ -33,6 +33,9 @@ unsigned char inputImage[SIZE][SIZE];
 unsigned char outputImage[SIZE][SIZE];
 char inputFileName[100];
 char outputFileName[100];
+char choice;
+
+// function declarations here
 //______________________________________
 void applyBlackAndWhiteFilter();
 //______________________________________
@@ -64,12 +67,11 @@ void skewImageH();
 //______________________________________
 void skewImageV();
 //______________________________________
-char choice;
 void menu()
 {
     // Declare the variables here.
 
-        while (true)
+    while (true)
     {
         // Display the menu.
 
@@ -371,6 +373,13 @@ void applyBlackAndWhiteFilter()
             }
         }
     }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
+        }
+    }
 }
 
 void applyInvertfilter()
@@ -382,6 +391,13 @@ void applyInvertfilter()
             outputImage[i][j] = 255 - inputImage[i][j]; // Convert every black pixel(0) to white pixel(255)
             //  Convert every white pixel(255) to black pixel(0)
             //  and every gray pixel is turned to opposite level
+        }
+    }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
         }
     }
 }
@@ -400,6 +416,14 @@ void merge()
         for (int j = 0; j < SIZE; j++)
         {
             outputImage[i][j] = (inputImage[i][j] + inputImag2[i][j]) / 2; // average of the two images
+        }
+    }
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
         }
     }
 }
@@ -431,6 +455,14 @@ void flipImage()
     {
         cout << "invalid input" << endl;
     }
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
+        }
+    }
 }
 void darkenandlightenimage()
 {
@@ -455,6 +487,14 @@ void darkenandlightenimage()
             {
                 outputImage[i][j] = inputImage[i][j] + ((255 - inputImage[i][j]) / 2);
             }
+        }
+    }
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
         }
     }
 }
@@ -493,6 +533,14 @@ void applyRotateImage()
             }
         }
     }
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
+        }
+    }
 }
 
 void applyEdgeDetection()
@@ -509,6 +557,14 @@ void applyEdgeDetection()
 
             int gradient = abs(gx) + abs(gy);
             outputImage[i][j] = (gradient > 128) ? 0 : 255;
+        }
+    }
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
         }
     }
 }
@@ -558,6 +614,14 @@ void enlarge_Image()
             }
         }
     }
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
+        }
+    }
 }
 void shrinkImage()
 {
@@ -605,6 +669,14 @@ void shrinkImage()
                     outputImage[i][j] = inputImage[s][x];
                 }
             }
+        }
+    }
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
         }
     }
 }
@@ -669,6 +741,14 @@ void mirrorImage()
                 outputImage[x][y] = inputImage[width - 1 - x][y];
                 outputImage[width - 1 - x][y] = inputImage[width - 1 - x][y];
             }
+        }
+    }
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
         }
     }
 }
@@ -767,6 +847,13 @@ void shuffle_image()
         }
         z++;
     }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
+        }
+    }
 }
 
 void crop_image()
@@ -789,6 +876,13 @@ void crop_image()
             {
                 outputImage[i][j] = inputImage[i][j];
             }
+        }
+    }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
         }
     }
 }
@@ -818,6 +912,13 @@ void BlurImage()
         {
             sum = inputImage[i][j] + inputImage[i][j + 1] + inputImage[i][j + 2] + inputImage[i + 1][j] + inputImage[i + 1][j + 1] + inputImage[i + 1][j + 2] + inputImage[i + 2][j] + inputImage[i + 2][j + 1] + inputImage[i + 2][j + 2] + inputImage[i + 3][j] + inputImage[i + 3][j + 1] + inputImage[i + 3][j + 2] + inputImage[i + 3][j + 3] + inputImage[i + 4][j] + inputImage[i + 4][j + 1] + inputImage[i + 4][j + 2] + inputImage[i + 4][j + 3] + inputImage[i + 4][j + 4];
             outputImage[i][j] = sum / 18;
+        }
+    }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
         }
     }
 }
@@ -857,6 +958,13 @@ void skewImageH()
             }
         }
     }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
+        }
+    }
 }
 void skewImageV()
 {
@@ -892,6 +1000,13 @@ void skewImageV()
             {
                 outputImage[i][j] = 255;
             }
+        }
+    }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
         }
     }
 }
