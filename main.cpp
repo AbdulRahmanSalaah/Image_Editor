@@ -15,7 +15,7 @@ Description: This program is an image editor that can apply different filters to
 made by:
 
 1-Abdulrahman Salah    ID:20220176              email: sa8640205@gmail.com
- 
+
 2-OmarSaeed            ID:20220225              email:  os9073020@gmail.com
 
 3:SohaylaMohamed       ID:20220159              email:  anmo9232@gmail.com
@@ -29,7 +29,10 @@ made by:
 #include <cstring>
 #include <cmath>
 #include "bmplib.cpp"
-
+unsigned char inputImage[SIZE][SIZE];
+unsigned char outputImage[SIZE][SIZE];
+char inputFileName[100];
+char outputFileName[100];
 //______________________________________
 void applyBlackAndWhiteFilter(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE]);
 //______________________________________
@@ -51,14 +54,21 @@ void shrinkImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][S
 //______________________________________
 void mirrorImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char x);
 //______________________________________
+void shuffle_image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE]);
+//______________________________________
+void BlurImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int sum);
+//______________________________________
+void crop_image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int x, int y, int w, int l);
+//______________________________________
+void skewImageH(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], double degree);
+//______________________________________
+void skewImageV(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], double degree);
+//______________________________________
 
 void menu()
 {
     // Declare the variables here.
-    unsigned char inputImage[SIZE][SIZE];
-    unsigned char outputImage[SIZE][SIZE];
-    char inputFileName[100];
-    char outputFileName[100];
+
     char choice;
 
     while (true)
@@ -75,7 +85,7 @@ void menu()
 
         switch (choice)
         {
-            // Load an image
+        // Load an image
         case '1':
         {
             cout << "Please enter the file name of the image to load: ";
@@ -121,8 +131,8 @@ void menu()
             cout << "b.  Shuffle Image" << endl;
             cout << "c. Blur Image" << endl;
             cout << "d.  Crop Image" << endl;
-            cout << "e. Skew Image Right" << endl;
-            cout << "f. Skew Image Up" << endl;
+            cout << "e. Skew Image horizontal (h)" << endl;
+            cout << "f. Skew Image vertical (v)" << endl;
 
             // Add more filter options here...
 
@@ -246,6 +256,8 @@ void menu()
             {
                 // Apply the shuffle filter
                 // ...
+                cout << "enter New order of quarters? ";
+                shuffle_image(inputImage, outputImage);
                 cout << "Shuffle filter applied." << endl;
                 break;
             }
@@ -253,6 +265,20 @@ void menu()
             {
                 // Apply the blur filter
                 // ...
+                int sum = 0;
+                BlurImage(inputImage, outputImage, sum);
+                BlurImage(inputImage, outputImage, sum);
+                BlurImage(inputImage, outputImage, sum);
+                BlurImage(inputImage, outputImage, sum);
+                BlurImage(inputImage, outputImage, sum);
+                BlurImage(inputImage, outputImage, sum);
+                BlurImage(inputImage, outputImage, sum);
+                BlurImage(inputImage, outputImage, sum);
+                BlurImage(inputImage, outputImage, sum);
+                BlurImage(inputImage, outputImage, sum);
+                BlurImage(inputImage, outputImage, sum);
+                BlurImage(inputImage, outputImage, sum);
+
                 cout << "Blur filter applied." << endl;
                 break;
             }
@@ -260,6 +286,10 @@ void menu()
             {
                 // Apply the crop filter
                 // ...
+                int x, y, w, l;
+                cout << "Please enter x y w l: ";
+                cin >> x >> y >> w >> l;
+                crop_image(inputImage, outputImage, x, y, w, l);
                 cout << "Crop filter applied." << endl;
                 break;
             }
@@ -268,6 +298,10 @@ void menu()
             {
                 // Apply the skew right filter
                 // ...
+                double degree;
+                cout << "Please enter the degree to skew the image: ";
+                cin >> degree;
+                skewImageH(inputImage, outputImage, degree);
                 cout << "Skew right filter applied." << endl;
                 break;
             }
@@ -275,6 +309,10 @@ void menu()
             {
                 // Apply the skew up filter
                 // ...
+                double degree;
+                cout << "Please enter the degree to skew the image: ";
+                cin >> degree;
+                skewImageV(inputImage, outputImage, degree);
                 cout << "Skew up filter applied." << endl;
                 break;
             }
@@ -326,7 +364,7 @@ int main()
     return 0;
 }
 
-// function definitions
+// implement of all the functions here
 
 void applyBlackAndWhiteFilter(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
 {
@@ -478,17 +516,45 @@ void applyEdgeDetection(unsigned char inputImage[][SIZE], unsigned char outputIm
 }
 void enlarge_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int quarter)
 {
-    int newHeight = SIZE * quarter;
-    int newWidth = SIZE * quarter;
-
-    for (int i = 0; i < newHeight; i++)
+    if (quarter == 1)
     {
-        for (int j = 0; j < newWidth; j++)
+        for (int i = 0; i < 128; i++)
         {
-            int originalRow = i / quarter;
-            int originalCol = j / quarter;
+            for (int j = 0; j < 128; j++)
+            {
+                outputImage[i * 2][j * 2] = inputImage[i][j];
+            }
+        }
+    }
+    else if (quarter == 2)
+    {
+        for (int i = 0; i < 128; i++)
+        {
+            for (int j = 0; j < 128; j++)
+            {
+                outputImage[i * 2][j * 2] = inputImage[i][j + 128];
+            }
+        }
+    }
+    else if (quarter == 3)
+    {
+        for (int i = 0; i < 128; i++)
+        {
+            for (int j = 0; j < 128; j++)
+            {
+                outputImage[i * 2][j * 2] = inputImage[i + 128][j];
+            }
+        }
+    }
+    if (quarter == 4)
+    {
 
-            outputImage[i][j] = inputImage[originalRow][originalCol];
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+                outputImage[i][j] = inputImage[(i / 2) + 127][(j / 2) + 127];
+            }
         }
     }
 }
@@ -522,7 +588,7 @@ void shrinkImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][S
             }
         }
     }
-    else if (size == 0.3 || size == 0.33)
+    else
     {
         for (int i = 0; i < SIZE; i++)
         {
@@ -601,4 +667,214 @@ void mirrorImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][S
     }
 }
 
-// Add more filter function definitions here...
+void shuffle_image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
+{
+    unsigned char image1[128][128];
+    unsigned char image2[128][128];
+    unsigned char image3[128][128];
+    unsigned char image4[128][128];
+    for (int i = 0; i < 128; ++i)
+    {
+        for (int j = 0; j < 128; ++j)
+        {
+            image1[i][j] = inputImage[i][j];
+        }
+    }
+    for (int i = 0; i < 128; ++i)
+    {
+        for (int j = 128; j < 256; ++j)
+        {
+            image2[i][j - 128] = inputImage[i][j];
+        }
+    }
+    for (int i = 128; i < 256; ++i)
+    {
+        for (int j = 0; j < 128; ++j)
+        {
+            image3[i - 128][j] = inputImage[i][j];
+        }
+    }
+    for (int i = 128; i < 256; ++i)
+    {
+        for (int j = 128; j < 256; ++j)
+        {
+            image4[i - 128][j - 128] = inputImage[i][j];
+        }
+    }
+
+    int r = 4;
+
+    int z = 1;
+    while (r--)
+    {
+        int y = 0;
+        int x = 0;
+        if (z == 2 || z == 4)
+        {
+            y = 128;
+        }
+        if (z == 3 || z == 4)
+        {
+            x = 128;
+        }
+        int n;
+        cin >> n;
+        if (n == 1)
+        {
+            for (int i = 0; i < 128; ++i)
+            {
+                for (int j = 0; j < 128; ++j)
+                {
+                    outputImage[i + x][j + y] = image1[i][j];
+                }
+            }
+        }
+        else if (n == 2)
+        {
+            for (int i = 0; i < 128; ++i)
+            {
+                for (int j = 0; j < 128; ++j)
+                {
+                    outputImage[i + x][j + y] = image2[i][j];
+                }
+            }
+        }
+        else if (n == 3)
+        {
+            for (int i = 0; i < 128; ++i)
+            {
+                for (int j = 0; j < 128; ++j)
+                {
+                    outputImage[i + x][j + y] = image3[i][j];
+                }
+            }
+        }
+        else if (n == 4)
+        {
+            for (int i = 0; i < 128; ++i)
+            {
+                for (int j = 0; j < 128; ++j)
+                {
+                    outputImage[i + x][j + y] = image4[i][j];
+                }
+            }
+        }
+        z++;
+    }
+}
+
+void crop_image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int x, int y, int w, int l)
+{
+    for (int i = 0; i < 256; ++i)
+    {
+        for (int j = 0; j < 256; ++j)
+        {
+            outputImage[i][j] = 255;
+        }
+    }
+    for (int i = y; i < 256; ++i)
+    {
+        for (int j = x; j < 256; ++j)
+        {
+            if (j <= w + x + 1 && i <= l + y)
+            {
+                outputImage[i][j] = inputImage[i][j];
+            }
+        }
+    }
+}
+
+void BlurImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int sum)
+{
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            sum = inputImage[i][j] + inputImage[i][j + 1] + inputImage[i][j + 2] + inputImage[i + 1][j] + inputImage[i + 1][j + 1] + inputImage[i + 1][j + 2] + inputImage[i + 2][j] + inputImage[i + 2][j + 1] + inputImage[i + 2][j + 2] + inputImage[i + 3][j] + inputImage[i + 3][j + 1] + inputImage[i + 3][j + 2] + inputImage[i + 3][j + 3] + inputImage[i + 4][j] + inputImage[i + 4][j + 1] + inputImage[i + 4][j + 2] + inputImage[i + 4][j + 3] + inputImage[i + 4][j + 4];
+            outputImage[i][j] = sum / 18;
+        }
+    }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            sum = inputImage[i][j] + inputImage[i][j + 1] + inputImage[i][j + 2] + inputImage[i + 1][j] + inputImage[i + 1][j + 1] + inputImage[i + 1][j + 2] + inputImage[i + 2][j] + inputImage[i + 2][j + 1] + inputImage[i + 2][j + 2] + inputImage[i + 3][j] + inputImage[i + 3][j + 1] + inputImage[i + 3][j + 2] + inputImage[i + 3][j + 3] + inputImage[i + 4][j] + inputImage[i + 4][j + 1] + inputImage[i + 4][j + 2] + inputImage[i + 4][j + 3] + inputImage[i + 4][j + 4];
+            outputImage[i][j] = sum / 18;
+        }
+    }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            sum = inputImage[i][j] + inputImage[i][j + 1] + inputImage[i][j + 2] + inputImage[i + 1][j] + inputImage[i + 1][j + 1] + inputImage[i + 1][j + 2] + inputImage[i + 2][j] + inputImage[i + 2][j + 1] + inputImage[i + 2][j + 2] + inputImage[i + 3][j] + inputImage[i + 3][j + 1] + inputImage[i + 3][j + 2] + inputImage[i + 3][j + 3] + inputImage[i + 4][j] + inputImage[i + 4][j + 1] + inputImage[i + 4][j + 2] + inputImage[i + 4][j + 3] + inputImage[i + 4][j + 4];
+            outputImage[i][j] = sum / 18;
+        }
+    }
+}
+void skewImageV(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], double degree)
+{
+
+    // Calculate the skew factor
+    double radians = degree * M_PI / 180.0;
+    double skewFactor = tan(radians);
+    int g = round(1 / skewFactor);
+
+    int m = 256 * skewFactor, cur;
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            outputImage[i * (256 - m) / 256][j] = inputImage[i][j];
+        }
+    }
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            cur = (256 - j) * skewFactor;
+            if (i >= cur && i < SIZE - (m - cur))
+            {
+                outputImage[i][j] = inputImage[i - cur][j];
+            }
+            else
+            {
+                outputImage[i][j] = 255;
+            }
+        }
+    }
+}
+void skewImageH(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], double degree)
+{
+
+    double radians = degree * M_PI / 180.0;
+    double skewFactor = tan(radians);
+    int g = round(1 / skewFactor);
+
+    int m = 256 * skewFactor, cur;
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            outputImage[i][j * (256 - m) / 256] = inputImage[i][j];
+        }
+    }
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        cur = (256 - i) * skewFactor;
+        for (int j = 0; j < SIZE; j++)
+        {
+
+            if (j >= cur && j < SIZE - (m - cur))
+            {
+                outputImage[i][j] = inputImage[i][j - cur];
+            }
+            else
+            {
+                outputImage[i][j] = 255;
+            }
+        }
+    }
+}
