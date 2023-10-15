@@ -34,44 +34,42 @@ unsigned char outputImage[SIZE][SIZE];
 char inputFileName[100];
 char outputFileName[100];
 //______________________________________
-void applyBlackAndWhiteFilter(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE]);
+void applyBlackAndWhiteFilter();
 //______________________________________
-void applyInvertfilter(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE]);
+void applyInvertfilter();
 //______________________________________
-void merge(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], unsigned char inputImag2[][SIZE]);
+void merge();
 //______________________________________
-void flipImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char x);
+void flipImage();
 //______________________________________
-void darkenandlightenimage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char c);
+void darkenandlightenimage();
 //______________________________________
-void applyRotateImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int Angle);
+void applyRotateImage();
 //______________________________________
-void applyEdgeDetection(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE]);
+void applyEdgeDetection();
 //______________________________________
-void enlarge_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int quarter);
+void enlarge_Image();
 //______________________________________
-void shrinkImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], float size);
+void shrinkImage();
 //______________________________________
-void mirrorImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char x);
+void mirrorImage();
 //______________________________________
-void shuffle_image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE]);
+void shuffle_image();
 //______________________________________
-void BlurImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int sum);
+void BlurImage();
 //______________________________________
-void crop_image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int x, int y, int w, int l);
+void crop_image();
 //______________________________________
-void skewImageH(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], double degree);
+void skewImageH();
 //______________________________________
-void skewImageV(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], double degree);
+void skewImageV();
 //______________________________________
-
+char choice;
 void menu()
 {
     // Declare the variables here.
 
-    char choice;
-
-    while (true)
+        while (true)
     {
         // Display the menu.
 
@@ -146,7 +144,7 @@ void menu()
             {
                 // Apply the Black and White filter
 
-                applyBlackAndWhiteFilter(inputImage, outputImage);
+                applyBlackAndWhiteFilter();
                 cout << "Black and White filter applied." << endl;
                 break;
             }
@@ -154,7 +152,7 @@ void menu()
             {
                 // Apply the Invert filter
 
-                applyInvertfilter(inputImage, outputImage);
+                applyInvertfilter();
                 cout << "Invert filter applied." << endl;
                 break;
             }
@@ -163,13 +161,8 @@ void menu()
                 // Apply the merge filter
 
                 cout << "Please enter name of image file to merge with: " << inputFileName << endl;
-                char inputFileName2[100];
-                cin >> inputFileName2;
-                unsigned char inputImage2[SIZE][SIZE];
-                strcat(inputFileName2, ".bmp");
 
-                readGSBMP(inputFileName2, inputImage2);
-                merge(inputImage, outputImage, inputImage2);
+                merge();
 
                 cout << "Merge filter applied." << endl;
                 break;
@@ -179,9 +172,8 @@ void menu()
                 // Apply the flip filter
 
                 cout << "choose h for horizontal flip or v for vertical flip: ";
-                char flipChoice;
-                cin >> flipChoice;
-                flipImage(inputImage, outputImage, flipChoice);
+
+                flipImage();
 
                 cout << "Flip filter applied." << endl;
                 break;
@@ -191,9 +183,8 @@ void menu()
                 // Apply the darken and lighten filter
 
                 cout << "Please enter d for darken or l for lighten: ";
-                char c;
-                cin >> c;
-                darkenandlightenimage(inputImage, outputImage, c);
+
+                darkenandlightenimage();
                 cout << "Darken and Lighten filter applied." << endl;
                 break;
             }
@@ -202,9 +193,8 @@ void menu()
                 // Apply the rotate filter
 
                 cout << "Please enter the angle to rotate the image (90, 180, 270): ";
-                int angle;
-                cin >> angle;
-                applyRotateImage(inputImage, outputImage, angle);
+
+                applyRotateImage();
 
                 cout << "Rotate filter applied." << endl;
                 break;
@@ -213,7 +203,7 @@ void menu()
             {
                 // Apply the edge detection filter
 
-                applyEdgeDetection(inputImage, outputImage);
+                applyEdgeDetection();
 
                 cout << "Edge detection filter applied." << endl;
                 break;
@@ -221,22 +211,18 @@ void menu()
             case '8':
             {
                 // Apply the enlarge filter
-
-                int quarter;
                 cout << "please enter the quarter to enlarge : ";
-                cin >> quarter;
-                enlarge_Image(inputImage, outputImage, quarter);
+
+                enlarge_Image();
                 cout << "Enlarge filter applied." << endl;
                 break;
             }
             case '9':
             {
                 // Apply the shrink filter
-
-                float size;
                 cout << "please enter the size (0.5 , 0.25 , 0.3) to shrink : ";
-                cin >> size;
-                shrinkImage(inputImage, outputImage, size);
+
+                shrinkImage();
 
                 cout << "Shrink filter applied." << endl;
                 break;
@@ -246,9 +232,8 @@ void menu()
                 // Apply the mirror 1/2 filter
 
                 cout << "Please enter l for left or r for right or u for up or d for down: ";
-                char x;
-                cin >> x;
-                mirrorImage(inputImage, outputImage, x);
+
+                mirrorImage();
                 cout << "Mirror 1/2 filter applied." << endl;
                 break;
             }
@@ -257,7 +242,7 @@ void menu()
                 // Apply the shuffle filter
                 // ...
                 cout << "enter New order of quarters? ";
-                shuffle_image(inputImage, outputImage);
+                shuffle_image();
                 cout << "Shuffle filter applied." << endl;
                 break;
             }
@@ -265,19 +250,19 @@ void menu()
             {
                 // Apply the blur filter
                 // ...
-                int sum = 0;
-                BlurImage(inputImage, outputImage, sum);
-                BlurImage(inputImage, outputImage, sum);
-                BlurImage(inputImage, outputImage, sum);
-                BlurImage(inputImage, outputImage, sum);
-                BlurImage(inputImage, outputImage, sum);
-                BlurImage(inputImage, outputImage, sum);
-                BlurImage(inputImage, outputImage, sum);
-                BlurImage(inputImage, outputImage, sum);
-                BlurImage(inputImage, outputImage, sum);
-                BlurImage(inputImage, outputImage, sum);
-                BlurImage(inputImage, outputImage, sum);
-                BlurImage(inputImage, outputImage, sum);
+
+                BlurImage();
+                BlurImage();
+                BlurImage();
+                BlurImage();
+                BlurImage();
+                BlurImage();
+                BlurImage();
+                BlurImage();
+                BlurImage();
+                BlurImage();
+                BlurImage();
+                BlurImage();
 
                 cout << "Blur filter applied." << endl;
                 break;
@@ -286,10 +271,9 @@ void menu()
             {
                 // Apply the crop filter
                 // ...
-                int x, y, w, l;
                 cout << "Please enter x y w l: ";
-                cin >> x >> y >> w >> l;
-                crop_image(inputImage, outputImage, x, y, w, l);
+
+                crop_image();
                 cout << "Crop filter applied." << endl;
                 break;
             }
@@ -298,10 +282,10 @@ void menu()
             {
                 // Apply the skew right filter
                 // ...
-                double degree;
+
                 cout << "Please enter the degree to skew the image: ";
-                cin >> degree;
-                skewImageH(inputImage, outputImage, degree);
+
+                skewImageH();
                 cout << "Skew right filter applied." << endl;
                 break;
             }
@@ -309,10 +293,10 @@ void menu()
             {
                 // Apply the skew up filter
                 // ...
-                double degree;
+
                 cout << "Please enter the degree to skew the image: ";
-                cin >> degree;
-                skewImageV(inputImage, outputImage, degree);
+
+                skewImageV();
                 cout << "Skew up filter applied." << endl;
                 break;
             }
@@ -366,7 +350,7 @@ int main()
 
 // implement of all the functions here
 
-void applyBlackAndWhiteFilter(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
+void applyBlackAndWhiteFilter()
 {
     int sum = 0;
     int pixelCount = SIZE * SIZE;
@@ -389,7 +373,7 @@ void applyBlackAndWhiteFilter(unsigned char inputImage[][SIZE], unsigned char ou
     }
 }
 
-void applyInvertfilter(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
+void applyInvertfilter()
 {
     for (int i = 0; i < SIZE; ++i)
     {
@@ -401,8 +385,16 @@ void applyInvertfilter(unsigned char inputImage[][SIZE], unsigned char outputIma
         }
     }
 }
-void merge(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], unsigned char inputImag2[][SIZE])
+void merge()
 {
+
+    char inputFileName2[100];
+    cin >> inputFileName2;
+
+    unsigned char inputImag2[SIZE][SIZE];
+    strcat(inputFileName2, ".bmp");
+    readGSBMP(inputFileName2, inputImag2);
+
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
@@ -411,8 +403,10 @@ void merge(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], 
         }
     }
 }
-void flipImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char x)
+void flipImage()
 {
+    char x;
+    cin >> x;
     if (x == 'h' || x == 'H')
     {
         for (int i = 0; i < SIZE; i++)
@@ -438,8 +432,10 @@ void flipImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZ
         cout << "invalid input" << endl;
     }
 }
-void darkenandlightenimage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char c)
+void darkenandlightenimage()
 {
+    char c;
+    cin >> c;
 
     if (c == 'd')
     {
@@ -462,8 +458,10 @@ void darkenandlightenimage(unsigned char inputImage[][SIZE], unsigned char outpu
         }
     }
 }
-void applyRotateImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int Angle)
+void applyRotateImage()
 {
+    int Angle;
+    cin >> Angle;
 
     if (Angle == 90)
     {
@@ -497,7 +495,7 @@ void applyRotateImage(unsigned char inputImage[][SIZE], unsigned char outputImag
     }
 }
 
-void applyEdgeDetection(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
+void applyEdgeDetection()
 {
     for (int i = 1; i < SIZE - 1; ++i)
     {
@@ -514,8 +512,11 @@ void applyEdgeDetection(unsigned char inputImage[][SIZE], unsigned char outputIm
         }
     }
 }
-void enlarge_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int quarter)
+void enlarge_Image()
 {
+    int quarter;
+
+    cin >> quarter;
     if (quarter == 1)
     {
         for (int i = 0; i < 128; i++)
@@ -558,8 +559,11 @@ void enlarge_Image(unsigned char inputImage[][SIZE], unsigned char outputImage[]
         }
     }
 }
-void shrinkImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], float size)
+void shrinkImage()
 {
+    float size;
+
+    cin >> size;
     if (size == 0.5)
     {
         for (int i = 0; i < SIZE; i++)
@@ -604,8 +608,10 @@ void shrinkImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][S
         }
     }
 }
-void mirrorImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], char x)
+void mirrorImage()
 {
+    char x;
+    cin >> x;
 
     if (x == 'l' || x == 'L')
     {
@@ -667,7 +673,7 @@ void mirrorImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][S
     }
 }
 
-void shuffle_image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE])
+void shuffle_image()
 {
     unsigned char image1[128][128];
     unsigned char image2[128][128];
@@ -763,8 +769,11 @@ void shuffle_image(unsigned char inputImage[][SIZE], unsigned char outputImage[]
     }
 }
 
-void crop_image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int x, int y, int w, int l)
+void crop_image()
 {
+    int x, y, w, l;
+
+    cin >> x >> y >> w >> l;
     for (int i = 0; i < 256; ++i)
     {
         for (int j = 0; j < 256; ++j)
@@ -784,8 +793,9 @@ void crop_image(unsigned char inputImage[][SIZE], unsigned char outputImage[][SI
     }
 }
 
-void BlurImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], int sum)
+void BlurImage()
 {
+    int sum = 0;
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
@@ -811,8 +821,12 @@ void BlurImage(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZ
         }
     }
 }
-void skewImageV(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], double degree)
+void skewImageH()
 {
+
+    double degree;
+
+    cin >> degree;
 
     // Calculate the skew factor
     double radians = degree * M_PI / 180.0;
@@ -844,8 +858,11 @@ void skewImageV(unsigned char inputImage[][SIZE], unsigned char outputImage[][SI
         }
     }
 }
-void skewImageH(unsigned char inputImage[][SIZE], unsigned char outputImage[][SIZE], double degree)
+void skewImageV()
 {
+    double degree;
+
+    cin >> degree;
 
     double radians = degree * M_PI / 180.0;
     double skewFactor = tan(radians);
