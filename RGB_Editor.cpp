@@ -313,6 +313,7 @@ void menu()
                     {
                         // Apply the skew up filter
                         // ...
+                        cout << "Please enter the degree to skew the image 'degree must belong to ]0,90[' : ";
                         skewImageV();
                         cout << "Skew up filter applied." << endl;
                         break;
