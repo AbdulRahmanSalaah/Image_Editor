@@ -265,6 +265,13 @@ void menu()
                 BlurImage();
                 BlurImage();
                 BlurImage();
+                for (int i = 0; i < SIZE; i++)
+                {
+                    for (int j = 0; j < SIZE; j++)
+                    {
+                        inputImage[i][j] = outputImage[i][j];
+                    }
+                }
 
                 cout << "Blur filter applied." << endl;
                 break;
@@ -625,6 +632,15 @@ void enlarge_Image()
 }
 void shrinkImage()
 {
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+
+            outputImage[i][j] = 255;
+        }
+    }
     float size;
 
     cin >> size;
@@ -912,13 +928,6 @@ void BlurImage()
         {
             sum = inputImage[i][j] + inputImage[i][j + 1] + inputImage[i][j + 2] + inputImage[i + 1][j] + inputImage[i + 1][j + 1] + inputImage[i + 1][j + 2] + inputImage[i + 2][j] + inputImage[i + 2][j + 1] + inputImage[i + 2][j + 2] + inputImage[i + 3][j] + inputImage[i + 3][j + 1] + inputImage[i + 3][j + 2] + inputImage[i + 3][j + 3] + inputImage[i + 4][j] + inputImage[i + 4][j + 1] + inputImage[i + 4][j + 2] + inputImage[i + 4][j + 3] + inputImage[i + 4][j + 4];
             outputImage[i][j] = sum / 18;
-        }
-    }
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
-        {
-            inputImage[i][j] = outputImage[i][j];
         }
     }
 }
