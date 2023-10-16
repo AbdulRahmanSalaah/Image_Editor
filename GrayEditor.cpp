@@ -59,7 +59,7 @@ void mirrorImage();
 //______________________________________
 void shuffle_image();
 //______________________________________
-void BlurImage();
+void blurImage();
 //______________________________________
 void crop_image();
 //______________________________________
@@ -85,263 +85,263 @@ void menu()
 
         switch (choice)
         {
-        // Load an image
-        case '1':
-        {
-            cout << "Please enter the file name of the image to load: ";
-            cin >> inputFileName;
-
-            // Load the image using readRGBBMP into inputImage
-            strcat(inputFileName, ".bmp");
-            int f = readGSBMP(inputFileName, inputImage);
-            if (f != 0)
-            {
-                cout << "Error loading file" << endl;
-                break;
-            }
-            else
-
-            {
-                cout << "Image loaded successfully." << endl;
-            }
-
-            break;
-        }
-        case '2':
-        {
-            // filter menu here
-
-            if (inputFileName[0] == '\0') // if the user didn't load an image
-            {
-                cout << "Please load an image first." << endl;
-                break;
-            }
-
-            cout << "Filter Options:" << endl;
-            cout << "1. Black & White" << endl;
-            cout << "2. Invert" << endl;
-            cout << "3. merge" << endl;
-            cout << "4. Flip" << endl;
-            cout << "5. Darken and Lighten Image" << endl;
-            cout << "6. Rotate Image" << endl;
-            cout << "7. Detect Image Edges" << endl;
-            cout << "8. Enlarge Image" << endl;
-            cout << "9. Shrink Image" << endl;
-            cout << "a.  Mirror 1/2 Image" << endl;
-            cout << "b.  Shuffle Image" << endl;
-            cout << "c. Blur Image" << endl;
-            cout << "d.  Crop Image" << endl;
-            cout << "e. Skew Image horizontal (h)" << endl;
-            cout << "f. Skew Image vertical (v)" << endl;
-
-            // Add more filter options here...
-
-            char filterChoice;
-            cout << "Please select a filter to apply: ";
-            cin >> filterChoice;
-
-            switch (filterChoice)
-            {
+            // Load an image
             case '1':
             {
-                // Apply the Black and White filter
+                cout << "Please enter the file name of the image to load: ";
+                cin >> inputFileName;
 
-                applyBlackAndWhiteFilter();
-                cout << "Black and White filter applied." << endl;
+                // Load the image using readRGBBMP into inputImage
+                strcat(inputFileName, ".bmp");
+                int f = readGSBMP(inputFileName, inputImage);
+                if (f != 0)
+                {
+                    cout << "Error loading file" << endl;
+                    break;
+                }
+                else
+
+                {
+                    cout << "Image loaded successfully." << endl;
+                }
+
                 break;
             }
             case '2':
             {
-                // Apply the Invert filter
+                // filter menu here
 
-                applyInvertfilter();
-                cout << "Invert filter applied." << endl;
+                if (inputFileName[0] == '\0') // if the user didn't load an image
+                {
+                    cout << "Please load an image first." << endl;
+                    break;
+                }
+
+                cout << "Filter Options:" << endl;
+                cout << "1. Black & White" << endl;
+                cout << "2. Invert" << endl;
+                cout << "3. merge" << endl;
+                cout << "4. Flip" << endl;
+                cout << "5. Darken and Lighten Image" << endl;
+                cout << "6. Rotate Image" << endl;
+                cout << "7. Detect Image Edges" << endl;
+                cout << "8. Enlarge Image" << endl;
+                cout << "9. Shrink Image" << endl;
+                cout << "a.  Mirror 1/2 Image" << endl;
+                cout << "b.  Shuffle Image" << endl;
+                cout << "c. Blur Image" << endl;
+                cout << "d.  Crop Image" << endl;
+                cout << "e. Skew Image horizontal (h)" << endl;
+                cout << "f. Skew Image vertical (v)" << endl;
+
+                // Add more filter options here...
+
+                char filterChoice;
+                cout << "Please select a filter to apply: ";
+                cin >> filterChoice;
+
+                switch (filterChoice)
+                {
+                    case '1':
+                    {
+                        // Apply the Black and White filter
+
+                        applyBlackAndWhiteFilter();
+                        cout << "Black and White filter applied." << endl;
+                        break;
+                    }
+                    case '2':
+                    {
+                        // Apply the Invert filter
+
+                        applyInvertfilter();
+                        cout << "Invert filter applied." << endl;
+                        break;
+                    }
+                    case '3':
+                    {
+                        // Apply the merge filter
+
+                        cout << "Please enter name of image file to merge with: " << inputFileName << endl;
+
+                        merge();
+
+                        cout << "Merge filter applied." << endl;
+                        break;
+                    }
+                    case '4':
+                    {
+                        // Apply the flip filter
+
+                        cout << "choose h for horizontal flip or v for vertical flip: ";
+
+                        flipImage();
+
+                        cout << "Flip filter applied." << endl;
+                        break;
+                    }
+                    case '5':
+                    {
+                        // Apply the darken and lighten filter
+
+                        cout << "Please enter d for darken or l for lighten: ";
+
+                        darkenandlightenimage();
+                        cout << "Darken and Lighten filter applied." << endl;
+                        break;
+                    }
+                    case '6':
+                    {
+                        // Apply the rotate filter
+
+                        cout << "Please enter the angle to rotate the image (90, 180, 270): ";
+
+                        applyRotateImage();
+
+                        cout << "Rotate filter applied." << endl;
+                        break;
+                    }
+                    case '7':
+                    {
+                        // Apply the edge detection filter
+
+                        applyEdgeDetection();
+
+                        cout << "Edge detection filter applied." << endl;
+                        break;
+                    }
+                    case '8':
+                    {
+                        // Apply the enlarge filter
+                        cout << "please enter the quarter to enlarge : ";
+
+                        enlarge_Image();
+                        cout << "Enlarge filter applied." << endl;
+                        break;
+                    }
+                    case '9':
+                    {
+                        // Apply the shrink filter
+                        cout << "please enter the size (0.5 , 0.25 , 0.3) to shrink : ";
+
+                        shrinkImage();
+
+                        cout << "Shrink filter applied." << endl;
+                        break;
+                    }
+                    case 'a':
+                    {
+                        // Apply the mirror 1/2 filter
+
+                        cout << "Please enter l for left or r for right or u for up or d for down: ";
+
+                        mirrorImage();
+                        cout << "Mirror 1/2 filter applied." << endl;
+                        break;
+                    }
+                    case 'b':
+                    {
+                        // Apply the shuffle filter
+                        // ...
+                        cout << "enter New order of quarters? ";
+                        shuffle_image();
+                        cout << "Shuffle filter applied." << endl;
+                        break;
+                    }
+                    case 'c':
+                    {
+                        // Apply the blur filter
+                        // ...
+
+                        blurImage();
+                        blurImage();
+                        blurImage();
+                        blurImage();
+                        blurImage();
+                        blurImage();
+                        blurImage();
+                        blurImage();
+                        blurImage();
+                        blurImage();
+                        blurImage();
+                        blurImage();
+                        for (int i = 0; i < SIZE; i++)
+                        {
+                            for (int j = 0; j < SIZE; j++)
+                            {
+                                inputImage[i][j] = outputImage[i][j];
+                            }
+                        }
+
+                        cout << "Blur filter applied." << endl;
+                        break;
+                    }
+                    case 'd':
+                    {
+                        // Apply the crop filter
+                        // ...
+                        cout << "Please enter x y w l: ";
+
+                        crop_image();
+                        cout << "Crop filter applied." << endl;
+                        break;
+                    }
+
+                    case 'e':
+                    {
+                        // Apply the skew right filter
+                        // ...
+
+                        cout << "Please enter the degree to skew the image: ";
+
+                        skewImageH();
+                        cout << "Skew right filter applied." << endl;
+                        break;
+                    }
+                    case 'f':
+                    {
+                        // Apply the skew up filter
+                        // ...
+
+                        cout << "Please enter the degree to skew the image: ";
+
+                        skewImageV();
+                        cout << "Skew up filter applied." << endl;
+                        break;
+                    }
+
+                    default:
+                        cout << "Invalid filter choice. Please try again." << endl;
+                }
                 break;
             }
             case '3':
             {
-                // Apply the merge filter
-
-                cout << "Please enter name of image file to merge with: " << inputFileName << endl;
-
-                merge();
-
-                cout << "Merge filter applied." << endl;
-                break;
-            }
-            case '4':
-            {
-                // Apply the flip filter
-
-                cout << "choose h for horizontal flip or v for vertical flip: ";
-
-                flipImage();
-
-                cout << "Flip filter applied." << endl;
-                break;
-            }
-            case '5':
-            {
-                // Apply the darken and lighten filter
-
-                cout << "Please enter d for darken or l for lighten: ";
-
-                darkenandlightenimage();
-                cout << "Darken and Lighten filter applied." << endl;
-                break;
-            }
-            case '6':
-            {
-                // Apply the rotate filter
-
-                cout << "Please enter the angle to rotate the image (90, 180, 270): ";
-
-                applyRotateImage();
-
-                cout << "Rotate filter applied." << endl;
-                break;
-            }
-            case '7':
-            {
-                // Apply the edge detection filter
-
-                applyEdgeDetection();
-
-                cout << "Edge detection filter applied." << endl;
-                break;
-            }
-            case '8':
-            {
-                // Apply the enlarge filter
-                cout << "please enter the quarter to enlarge : ";
-
-                enlarge_Image();
-                cout << "Enlarge filter applied." << endl;
-                break;
-            }
-            case '9':
-            {
-                // Apply the shrink filter
-                cout << "please enter the size (0.5 , 0.25 , 0.3) to shrink : ";
-
-                shrinkImage();
-
-                cout << "Shrink filter applied." << endl;
-                break;
-            }
-            case 'a':
-            {
-                // Apply the mirror 1/2 filter
-
-                cout << "Please enter l for left or r for right or u for up or d for down: ";
-
-                mirrorImage();
-                cout << "Mirror 1/2 filter applied." << endl;
-                break;
-            }
-            case 'b':
-            {
-                // Apply the shuffle filter
-                // ...
-                cout << "enter New order of quarters? ";
-                shuffle_image();
-                cout << "Shuffle filter applied." << endl;
-                break;
-            }
-            case 'c':
-            {
-                // Apply the blur filter
-                // ...
-
-                BlurImage();
-                BlurImage();
-                BlurImage();
-                BlurImage();
-                BlurImage();
-                BlurImage();
-                BlurImage();
-                BlurImage();
-                BlurImage();
-                BlurImage();
-                BlurImage();
-                BlurImage();
-                for (int i = 0; i < SIZE; i++)
+                if (inputFileName[0] == '\0')
                 {
-                    for (int j = 0; j < SIZE; j++)
-                    {
-                        inputImage[i][j] = outputImage[i][j];
-                    }
+                    cout << "Please load an image first." << endl;
+                    break;
                 }
 
-                cout << "Blur filter applied." << endl;
+                cout << "Please enter the target file name to save the image: ";
+                cin >> outputFileName;
+
+                // Write the filtered image using writeRGBBMP
+                strcat(outputFileName, ".bmp");
+
+                writeGSBMP(outputFileName, outputImage);
+
+                cout << "Image saved as " << outputFileName << endl;
+
                 break;
             }
-            case 'd':
+            case '0':
             {
-                // Apply the crop filter
-                // ...
-                cout << "Please enter x y w l: ";
-
-                crop_image();
-                cout << "Crop filter applied." << endl;
-                break;
+                cout << "Exiting the program." << endl;
+                return;
             }
-
-            case 'e':
-            {
-                // Apply the skew right filter
-                // ...
-
-                cout << "Please enter the degree to skew the image: ";
-
-                skewImageH();
-                cout << "Skew right filter applied." << endl;
-                break;
-            }
-            case 'f':
-            {
-                // Apply the skew up filter
-                // ...
-
-                cout << "Please enter the degree to skew the image: ";
-
-                skewImageV();
-                cout << "Skew up filter applied." << endl;
-                break;
-            }
-
             default:
-                cout << "Invalid filter choice. Please try again." << endl;
-            }
-            break;
-        }
-        case '3':
-        {
-            if (inputFileName[0] == '\0')
-            {
-                cout << "Please load an image first." << endl;
-                break;
-            }
-
-            cout << "Please enter the target file name to save the image: ";
-            cin >> outputFileName;
-
-            // Write the filtered image using writeRGBBMP
-            strcat(outputFileName, ".bmp");
-
-            writeGSBMP(outputFileName, outputImage);
-
-            cout << "Image saved as " << outputFileName << endl;
-
-            break;
-        }
-        case '0':
-        {
-            cout << "Exiting the program." << endl;
-            return;
-        }
-        default:
-            cout << "Invalid choice. Please try again." << endl;
+                cout << "Invalid choice. Please try again." << endl;
         }
     }
 }
@@ -361,8 +361,7 @@ int main()
 
 void applyBlackAndWhiteFilter()
 {
-    int sum = 0;
-    int pixelCount = SIZE * SIZE;
+
 
     // Calculate the average gray level
     for (int i = 0; i < SIZE; i++)
@@ -507,10 +506,10 @@ void darkenandlightenimage()
 }
 void applyRotateImage()
 {
-    int Angle;
-    cin >> Angle;
+    int angle;
+    cin >> angle;
 
-    if (Angle == 90)
+    if (angle == 90)
     {
         for (int i = 0; i < SIZE; ++i)
         {
@@ -520,7 +519,7 @@ void applyRotateImage()
             }
         }
     }
-    else if (Angle == 180)
+    else if (angle == 180)
     {
         for (int i = 0; i < SIZE; ++i)
         {
@@ -530,7 +529,7 @@ void applyRotateImage()
             }
         }
     }
-    else if (Angle == 270)
+    else if (angle == 270)
     {
         for (int i = 0; i < SIZE; ++i)
         {
@@ -903,9 +902,9 @@ void crop_image()
     }
 }
 
-void BlurImage()
+void blurImage()
 {
-    int sum = 0;
+    int sum ;
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
