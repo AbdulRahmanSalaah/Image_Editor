@@ -950,6 +950,7 @@ void skewImageH()
     double m=s/SIZE;
 
 
+    // to shrink the photo
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j < SIZE; ++j) {
             if (i * x <= 255){
@@ -965,6 +966,7 @@ void skewImageH()
         }
         s-=m;
     }
+    // to shift the shrinked image pixels
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
@@ -993,7 +995,7 @@ void skewImageV()
     double s=SIZE-(256/(1+(1/skewFactor)));
     double m=s/SIZE;
 
-
+  // to shrink the photo
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j < SIZE; ++j) {
             if (j * x <= 255){
@@ -1002,7 +1004,7 @@ void skewImageV()
 
         }
     }
-
+    // to shift the shrinked image pixels
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j <(256/(1+(1/skewFactor))) ; ++j) {
             outputImage[i][j+(int )s]=temp[i][j];
