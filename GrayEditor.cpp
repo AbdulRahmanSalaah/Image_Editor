@@ -929,6 +929,13 @@ void blurImage()
             outputImage[i][j] = sum / 18;
         }
     }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
+        }
+    }
 }
 void skewImageH()
 {
@@ -1002,6 +1009,7 @@ void skewImageV()
         }
         s-=m;
     }
+
 
 
 
