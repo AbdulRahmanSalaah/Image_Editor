@@ -1076,7 +1076,7 @@ void skewImageH()
         for (int j = 0; j < SIZE; ++j) {
             for (int k = 0; k <RGB ; ++k) {
 
-                outputImage[i][j][k]=255;
+            outputImage[i][j][k]=255;
             }
         }
     }
@@ -1096,9 +1096,9 @@ void skewImageH()
         for (int j = 0; j < SIZE; ++j) {
             for (int k = 0; k <RGB ; ++k) {
 
-                if (i * x <= 255){
-                    temp[i][j][k]=inputImage[i* (int)x][j][k];
-                }
+            if (i * x <= 255){
+                temp[i][j][k]=inputImage[i* (int)x][j][k];
+            }
 
             }
         }
@@ -1108,20 +1108,19 @@ void skewImageH()
         for (int j = 0; j <(256/(1+(1/skewFactor))) ; ++j) {
             for (int k = 0; k <RGB ; ++k) {
 
-                outputImage[j+(int )s][i][k]=temp[j][i][k];
-            }
+            outputImage[j+(int )s][i][k]=temp[j][i][k];
 
+            }
         }
         s-=m;
     }
-
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
         {
             for (int k = 0; k <RGB ; ++k) {
 
-                inputImage[i][j][k] = outputImage[i][j][k];
+            inputImage[i][j][k] = outputImage[i][j][k];
             }
         }
     }
@@ -1133,9 +1132,9 @@ void skewImageV()
     unsigned char temp[SIZE][SIZE][RGB];
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j < SIZE; ++j) {
-            for (int k = 0; k <RGB ; ++k) {
+            for (int k = 0; k < RGB; ++k) {
 
-                outputImage[i][j][k]=255;
+            outputImage[i][j][k]=255;
             }
         }
     }
@@ -1153,9 +1152,9 @@ void skewImageV()
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j < SIZE; ++j) {
             if (j * x <= 255){
-                for (int k = 0; k < RGB; ++k) {
+                for (int k = 0; k <RGB ; ++k) {
 
-                    temp[i][j][k]=inputImage[i][j* (int)x][k];
+                temp[i][j][k]=inputImage[i][j* (int)x][k];
                 }
             }
 
@@ -1166,7 +1165,7 @@ void skewImageV()
         for (int j = 0; j <(256/(1+(1/skewFactor))) ; ++j) {
             for (int k = 0; k <RGB ; ++k) {
 
-                outputImage[i][j+(int )s][k]=temp[i][j][k];
+            outputImage[i][j+(int )s][k]=temp[i][j][k];
             }
 
         }
@@ -1176,12 +1175,16 @@ void skewImageV()
     {
         for (int j = 0; j < SIZE; j++)
         {
-            for (int k = 0; k < RGB; ++k) {
+            for (int k = 0; k <RGB ; ++k) {
 
-                inputImage[i][j][k] = outputImage[i][j][k];
+            inputImage[i][j][k] = outputImage[i][j][k];
             }
         }
     }
+
+
+
+
 }
 
 
@@ -1206,5 +1209,4 @@ void applygray(unsigned char temp[SIZE][SIZE][RGB])
     }
 
 }
-
 
