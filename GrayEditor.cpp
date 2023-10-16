@@ -1102,6 +1102,7 @@ void skewImageH()
             }
         }
     }
+    // to shift the shrinked image pixels
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j <(256/(1+(1/skewFactor))) ; ++j) {
             for (int k = 0; k <RGB ; ++k) {
@@ -1112,7 +1113,7 @@ void skewImageH()
         }
         s-=m;
     }
-    // to shift the shrinked image pixels
+   
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
