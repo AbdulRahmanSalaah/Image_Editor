@@ -976,45 +976,40 @@ void skewImageH()
 }
 void skewImageV()
 {
+    unsigned char temp[SIZE][SIZE];
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
+            outputImage[i][j]=255;
+        }
+    }
     double degree;
-
     cin >> degree;
-
+    degree=90-degree;
     double radians = degree * M_PI / 180.0;
     double skewFactor = tan(radians);
-    int g = round(1 / skewFactor);
 
-    int m = 256 * skewFactor, cur;
+    double x=256/(256/(1+(1/skewFactor)));
+    double s=SIZE-(256/(1+(1/skewFactor)));
+    double m=s/SIZE;
 
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
-        {
-            outputImage[i][j * (256 - m) / 256] = inputImage[i][j];
-        }
-    }
 
-    for (int i = 0; i < SIZE; i++)
-    {
-        cur = (256 - i) * skewFactor;
-        for (int j = 0; j < SIZE; j++)
-        {
-
-            if (j >= cur && j < SIZE - (m - cur))
-            {
-                outputImage[i][j] = inputImage[i][j - cur];
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
+            if (j * x <= 255){
+                temp[i][j]=inputImage[i][j* (int)x];
             }
-            else
-            {
-                outputImage[i][j] = 255;
-            }
+
         }
     }
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
-        {
-            inputImage[i][j] = outputImage[i][j];
+
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j <(256/(1+(1/skewFactor))) ; ++j) {
+            outputImage[i][j+(int )s]=temp[i][j];
+
         }
+            s-=m;
     }
+
+
+
 }
