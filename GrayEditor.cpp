@@ -292,7 +292,7 @@ void menu()
                         // Apply the skew right filter
                         // ...
 
-                        cout << "Please enter the degree to skew the image: ";
+                        cout << "Please enter the degree to skew the image 'degree must belong to ]0,90[' : ";
 
                         skewImageH();
                         cout << "Skew right filter applied." << endl;
@@ -303,7 +303,7 @@ void menu()
                         // Apply the skew up filter
                         // ...
 
-                        cout << "Please enter the degree to skew the image: ";
+                        cout << "Please enter the degree to skew the image 'degree must belong to ]0,90[' : ";
 
                         skewImageV();
                         cout << "Skew up filter applied." << endl;
@@ -929,13 +929,7 @@ void blurImage()
             outputImage[i][j] = sum / 18;
         }
     }
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
-        {
-            inputImage[i][j] = outputImage[i][j];
-        }
-    }
+
 }
 void skewImageH()
 {
