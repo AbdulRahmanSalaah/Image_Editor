@@ -932,47 +932,40 @@ void blurImage()
 }
 void skewImageH()
 {
-
+    unsigned char temp[SIZE][SIZE];
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
+            outputImage[i][j]=255;
+        }
+    }
     double degree;
-
     cin >> degree;
-
-    // Calculate the skew factor
+    degree=90-degree;
     double radians = degree * M_PI / 180.0;
     double skewFactor = tan(radians);
-    int g = round(1 / skewFactor);
 
-    int m = 256 * skewFactor, cur;
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
-        {
-            outputImage[i * (256 - m) / 256][j] = inputImage[i][j];
+    double x=256/(256/(1+(1/skewFactor)));
+    double s=SIZE-(256/(1+(1/skewFactor)));
+    double m=s/SIZE;
+
+
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
+            if (i * x <= 255){
+                temp[i][j]=inputImage[i* (int)x][j];
+            }
+
         }
+    }
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j <(256/(1+(1/skewFactor))) ; ++j) {
+            outputImage[j+(int )s][i]=temp[j][i];
+
+        }
+        s-=m;
     }
 
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
-        {
-            cur = (256 - j) * skewFactor;
-            if (i >= cur && i < SIZE - (m - cur))
-            {
-                outputImage[i][j] = inputImage[i - cur][j];
-            }
-            else
-            {
-                outputImage[i][j] = 255;
-            }
-        }
-    }
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
-        {
-            inputImage[i][j] = outputImage[i][j];
-        }
-    }
+
 }
 void skewImageV()
 {
@@ -1007,14 +1000,7 @@ void skewImageV()
             outputImage[i][j+(int )s]=temp[i][j];
 
         }
-            s-=m;
-    }
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
-        {
-            inputImage[i][j] = outputImage[i][j];
-        }
+        s-=m;
     }
 
 
