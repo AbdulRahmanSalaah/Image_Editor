@@ -971,6 +971,13 @@ void skewImageH()
         }
         s-=m;
     }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            inputImage[i][j] = outputImage[i][j];
+        }
+    }
 
 
 }
