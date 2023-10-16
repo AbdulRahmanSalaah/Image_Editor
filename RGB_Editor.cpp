@@ -272,7 +272,16 @@ void menu()
                         blurImage();
                         blurImage();
                         blurImage();
-                        blurImage();
+                        for (int i = 0; i < SIZE; i++)
+                        {
+                            for (int j = 0; j < SIZE; j++)
+                            {
+                                for (int k = 0; k <RGB ; ++k) {
+
+                                inputImage[i][j][k] = outputImage[i][j][k];
+                                }
+                            }
+                        }
                         blurImage();
 
 
@@ -1056,16 +1065,7 @@ void blurImage()
             }
     }
 
-   /* for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE; j++)
-        {
-            for (int k = 0; k < RGB; ++k) {
 
-            inputImage[i][j][k] = outputImage[i][j][k];
-            }
-        }
-    }*/
 }
 void skewImageH()
 {
