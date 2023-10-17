@@ -945,8 +945,8 @@ void skewImageH()
     double radians = degree * M_PI / 180.0;
     double skewFactor = tan(radians);
 
-    double x=256/(256/(1+(1/skewFactor)));
-    double s=SIZE-(256/(1+(1/skewFactor)));
+    double x=255/(255/(1+(1/skewFactor)));
+    double s=SIZE-(255/(1+(1/skewFactor)));
     double m=s/SIZE;
 
 
@@ -961,7 +961,7 @@ void skewImageH()
     }
     // to shift the shrinked image pixels
     for (int i = 0; i < SIZE; ++i) {
-        for (int j = 0; j <(256/(1+(1/skewFactor))) ; ++j) {
+        for (int j = 0; j <(255/(1+(1/skewFactor))) ; ++j) {
             outputImage[j+(int )s][i]=temp[j][i];
 
         }
@@ -991,8 +991,8 @@ void skewImageV()
     double radians = degree * M_PI / 180.0;
     double skewFactor = tan(radians);
 
-    double x=256/(256/(1+(1/skewFactor)));
-    double s=SIZE-(256/(1+(1/skewFactor)));
+    double x=255/(255/(1+(1/skewFactor)));
+    double s=SIZE-(255/(1+(1/skewFactor)));
     double m=s/SIZE;
 
     // to shrink the photo
@@ -1006,7 +1006,7 @@ void skewImageV()
     }
     // to shift the shrinked image pixels
     for (int i = 0; i < SIZE; ++i) {
-        for (int j = 0; j <(256/(1+(1/skewFactor))) ; ++j) {
+        for (int j = 0; j <(255/(1+(1/skewFactor))) ; ++j) {
             outputImage[i][j+(int )s]=temp[i][j];
 
         }
